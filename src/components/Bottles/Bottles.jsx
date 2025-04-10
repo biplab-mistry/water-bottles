@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Bottle from '../Bottle/Bottle';
 import Cart from '../Cart/Cart';
-import { addCart, getCart } from '../../utility/Utility';
+import { addCart, deleteCart, getCart } from '../../utility/Utility';
 
 const Bottles = () => {
     const [bottles, setBottles] = useState([])
@@ -34,14 +34,18 @@ const Bottles = () => {
         setId(newIds)
         addCart(newIds)
     }
-
+const handleRemove=(id)=>{
+    const update=carts.filter(ca=>ca.id !==id)
+    deleteCart(id)
+    setCarts(update)
+}
 
     return (
         <div>
             <h1>Total Bottles count :{bottles.length}</h1>
             <h1>Cart Items:{carts.length}</h1>
             <div className='my-4 grid grid-cols-10 gap-2'>
-                {carts.map(item => <Cart item={item}></Cart>)}
+                {carts.map(item => <Cart handleRemove={handleRemove} item={item}></Cart>)}
 
             </div>
             <div className="grid grid-cols-6 gap-4">
